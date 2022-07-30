@@ -1,0 +1,47 @@
+logging:
+  level:
+    ROOT: ${LOG_LEVEL:INFO}
+debug: ${DEBUG:false}
+
+server:
+  port: ${SERVICE_PORT:8080}
+  error:
+    include-message: always
+    include-exception: true
+
+spring:
+  application:
+    name: reference-service
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL:localhost:5432/sutt_dev_db}
+    username: ${DATABASE_LOGIN:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 4
+      connectionTimeout: 20000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: internalDMCHikariCP
+  jpa:
+    properties:
+      hibernate:
+        default_schema: reference
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: ${SHOW_SQL:false}
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  flyway:
+    schemas: ${spring.jpa.properties.hibernate.default_schema}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

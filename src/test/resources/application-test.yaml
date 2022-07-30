@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: reference-service
+  jpa:
+    properties:
+      hibernate:
+        default_schema: test
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  flyway:
+    schemas: test
+    cleanOnValidationError: true
